@@ -6,24 +6,21 @@ namespace Containerschip
 {
     public class Container
     {
-        public enum containerType
+        public enum ContainerType
         {
-            Cooled,
-            Regular,
-            Valueable
+            Cooled = 1,
+            Regular = 2,
+            Valueable =3
         }
-        public enum ContainerWeight
-        {
-            full = 30000,
-            empty = 4000
-        }
-        public containerType containertype { get; set; }
+        
+        public ContainerType containertype { get; set; }
         public int containerweight { get; set; }
 
-        public Container(containerType type, int weight)
+        public Container(ContainerType type, int weight)
         {
             this.containertype = type;
             this.containerweight = weight;
         }
+        
     }
-}
+} 
