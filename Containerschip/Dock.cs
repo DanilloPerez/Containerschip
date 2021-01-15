@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Containerschip
 {
-    class Dock
+    public class Dock
     {
         private List<Container> SortContainers(List<Container> containerList)
         {
@@ -20,11 +20,11 @@ namespace Containerschip
             List<Container> regularcontainerList = new List<Container>();
             foreach (Container container in oldContainers)
             {
-                if (container.containertype == Container.containerType.Cooled)
+                if (container.containertype == Container.ContainerType.Cooled)
                     cooledcontainerList.Add(container);
-                else if (container.containertype == Container.containerType.Regular)
+                else if (container.containertype == Container.ContainerType.Regular)
                     regularcontainerList.Add(container);
-                else if (container.containertype == Container.containerType.Valueable)
+                else if (container.containertype == Container.ContainerType.Valueable)
                     valueablecontainerList.Add(container);
             }
             cooledcontainerList.AddRange(regularcontainerList);
@@ -35,11 +35,11 @@ namespace Containerschip
         {
             Container[] ContainersArray = oldContainers.ToArray();
             List<Container> returnList = new List<Container>();
-            for (int j = 0; j > ContainersArray.Length; j++)
+            for (int j = 0; j < ContainersArray.Length; j++)
             {
-                Container tempContainer = new Container(Container.containerType.Regular, 4000);
+                Container tempContainer = new Container(Container.ContainerType.Regular, 4000);
                 int index = 0;
-                for (int i = 0; i > ContainersArray.Length; i++)
+                for (int i = 0; i < ContainersArray.Length; i++)
                 {
                     if (ContainersArray[i] != null)
                     {
@@ -55,45 +55,21 @@ namespace Containerschip
             }
             return returnList;
         }
-
-        private Ship SplitByContainerType(Container container)
+        public Ship PlaceContainer(List<Container> containerlist, int length, int width)
         {
-            Ship tempship = new Ship();
-            if (container.containertype == Container.containerType.Cooled)
+            if (containerlist == null)
             {
-                tempship.newCooledContainer.Add(container);
-            }
-            else if (container.containertype == Container.containerType.Regular)
-            {
-                tempship.newRegularContainer.Add(container);
-            }
-            else if (container.containertype == Container.containerType.Valueable)
-            {
-                tempship.newValueableContainer.Add(container);
-            }
-            return tempship;
+                throw new ArgumentException("containerlist cannot be empty");
+            }           
+            Ship ship = new Ship(length, width);
+            
+            containerlist = SortContainers(containerlist);
+            ship = ship.PlaceContainers(containerlist);
+            return ship;
         }
 
-        private Ship PlaceCooledContainers(Container newCooledContainer, Ship ship)
-        {
-            List<Container> PlacedContainers = new List<Container>();
-            // first row only
-
- 
-        }
-        private Ship PlaceRegularContainers(Container newRegularContainer, Ship ship)
-        {
-            List<Container> PlacedContainers = new List<Container>();
-            // all the places
-
-        }
-        private Ship PlaceValueableContainers(Container newValueableContainer, Ship ship)
-        {
-            List<Container> PlacedContainers = new List<Container>();
-            // one of both sides must be reacheable
-            // nothing on top
-                      
-        }
+      
+       
     }
 }
 
